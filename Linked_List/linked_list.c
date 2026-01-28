@@ -81,6 +81,17 @@ void printList(Node* head) {
     printf("NULL\n");
 }
 
+// Linear Searching in Linked List
+Node* LSearch(Node *head, int key) {
+    while (head != NULL) {
+        if (head->data == key) {
+            return head;
+        }
+        head = head->next;
+    }
+    return NULL;
+}
+
 // Free the memory of linked list
 void freeLinkedList(Node* head) {
     Node* temp = NULL;
@@ -119,6 +130,18 @@ int main(void) {
  
     // maxValFinder() test code
     printf("The maximum value: %d\n", maxValFinder(head));
+
+    // LSearch() test code
+    int value_to_find;
+    printf("Enter the value you want to find: ");
+    scanf("%d", &value_to_find);
+    Node* result = LSearch(head, value_to_find);
+
+    if (result != NULL) {
+        printf("Found node with value: %d\n", result->data);
+    } else {
+        printf("Value not found in the list\n");
+    }
 
     // Free the memory
     free(arr);
