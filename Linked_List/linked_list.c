@@ -1,8 +1,6 @@
-// Preprocessor Directives
 #include <stdio.h>
 #include <stdlib.h>
 
-// Node struct for Linked List Nodes
 typedef struct Node {
     int data;
     struct Node* next;
@@ -92,6 +90,34 @@ Node* LSearch(Node *head, int key) {
     return NULL;
 }
 
+// Insert a node in Linked List
+void insertNewNode(Node** head, int index, int value) {
+    if (index < 0) return;
+
+    Node* newNode = malloc(sizeof(Node));
+    if (newNode == NULL) return;
+
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (index == 0) {
+        newNode->next = *head;
+        *head = newNode;
+        return;
+    }
+
+    Node* iter_node = *head;
+    int i = 0;
+
+    while (i < index - 1 && iter_node->next != NULL) {
+        iter_node = iter_node->next;
+        i++;
+    }
+
+    newNode->next = iter_node->next;
+    iter_node->next = newNode;
+}
+
 // Free the memory of linked list
 void freeLinkedList(Node* head) {
     Node* temp = NULL;
@@ -102,7 +128,6 @@ void freeLinkedList(Node* head) {
     }
 }
 
-// Main Function
 int main(void) {
     int arr_size = 0;
 
@@ -142,6 +167,12 @@ int main(void) {
     } else {
         printf("Value not found in the list\n");
     }
+
+    // insertNewNode() test code
+    insertNewNode(&head, 2, 1000);
+    printList(head);
+    insertNewNode(&head, 0, 251);
+    printList(head);
 
     // Free the memory
     free(arr);
