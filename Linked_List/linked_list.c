@@ -162,6 +162,35 @@ void insertSorted(Node** head, int value) {
     iter_node->next = newNode;
 }
 
+// Delete Node from Linked List
+void deleteNode(Node** head, int value) {
+    if (*head == NULL) {
+        return;
+    }
+
+    if (value == (*head)->data) {
+        Node* temp = *head;
+        *head = (*head)->next;
+        free(temp);
+        return;
+    }
+    
+    Node* iter_node = (*head)->next;
+    Node* pre_iter_node = *head;
+        
+    while (iter_node != NULL && iter_node->data != value) {
+        pre_iter_node = iter_node;
+        iter_node = iter_node->next;
+    }
+
+    if (iter_node == NULL) {
+        return;
+    }
+
+    pre_iter_node->next = iter_node->next;
+    free(iter_node);
+}
+
 // Free the memory of linked list
 void freeLinkedList(Node* head) {
     Node* temp = NULL;
@@ -227,6 +256,15 @@ int main(void) {
     // otherwise the function will
     // result in unexpected behaviours
     insertSorted(&head, 500);
+    printList(head);
+
+    // deleteNode() test code
+    if (result != NULL) {
+        deleteNode(&head, value_to_find);
+    } else {
+        printf("\n");
+    }
+
     printList(head);
 
     // Free the memory
