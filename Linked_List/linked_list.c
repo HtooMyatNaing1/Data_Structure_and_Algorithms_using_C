@@ -137,6 +137,25 @@ void insertEnd(Node** head, int value) {
     iter_node->next = newNode;
 }
 
+// Checking if the linked list is sorted or not
+int isSorted(Node* head) {
+    if (head == NULL || head->next == NULL) {
+        return 1;
+    }
+
+    int current_value = head->data;
+    Node* iter_node = head->next;
+
+    while (iter_node != NULL) {
+        if (iter_node->data < current_value) {
+            return 0;
+        }
+        current_value = iter_node->data;
+        iter_node = iter_node->next;
+    }
+    return 1;
+}
+
 // Inserting a New Node in a Sorted Linked List
 void insertSorted(Node** head, int value) {
     Node* newNode = malloc(sizeof(Node));
@@ -160,6 +179,11 @@ void insertSorted(Node** head, int value) {
 
     newNode->next = iter_node->next;
     iter_node->next = newNode;
+}
+
+// Reverse a Linked List
+void reverseList(Node** head) {
+    // Write Code here
 }
 
 // Delete Node from Linked List
@@ -266,6 +290,23 @@ int main(void) {
     }
 
     printList(head);
+
+    // isSorted() test code
+    Node* head_1 = malloc(sizeof(Node));
+    head_1->data = 0;
+    head_1->next = NULL;
+    for (int i = 1; i <= 10; i*=2) {
+        insertEnd(&head_1, i);
+    }
+
+    printList(head_1);
+
+    if (isSorted(head_1)) {
+        insertSorted(&head_1, 3);
+        insertSorted(&head_1, 20);
+    }
+
+    printList(head_1);
 
     // Free the memory
     free(arr);
