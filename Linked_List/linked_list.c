@@ -118,6 +118,50 @@ void insertNewNode(Node** head, int index, int value) {
     iter_node->next = newNode;
 }
 
+// Inserting a New Node at the end of the Linked List
+void insertEnd(Node** head, int value) {
+    Node* newNode = malloc(sizeof(Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+
+    Node* iter_node = *head;
+    while(iter_node->next != NULL) {
+        iter_node = iter_node->next;
+    }
+
+    iter_node->next = newNode;
+}
+
+// Inserting a New Node in a Sorted Linked List
+void insertSorted(Node** head, int value) {
+    Node* newNode = malloc(sizeof(Node));
+    if (newNode == NULL) return;
+
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (*head == NULL || value < (*head)->data) {
+        newNode->next = *head;
+        *head = newNode;
+        return;
+    }
+
+    Node* iter_node = *head;
+
+    while (iter_node->next != NULL &&
+           iter_node->next->data < value) {
+        iter_node = iter_node->next;
+    }
+
+    newNode->next = iter_node->next;
+    iter_node->next = newNode;
+}
+
 // Free the memory of linked list
 void freeLinkedList(Node* head) {
     Node* temp = NULL;
@@ -172,6 +216,17 @@ int main(void) {
     insertNewNode(&head, 2, 1000);
     printList(head);
     insertNewNode(&head, 0, 251);
+    printList(head);
+
+    // insertEnd() test code
+    insertEnd(&head, 555);
+    printList(head);
+
+    // insertSorted() test code
+    // The linked list should be sorted before using this function, 
+    // otherwise the function will
+    // result in unexpected behaviours
+    insertSorted(&head, 500);
     printList(head);
 
     // Free the memory
